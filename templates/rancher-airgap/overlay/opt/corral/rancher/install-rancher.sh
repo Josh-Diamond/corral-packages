@@ -16,10 +16,11 @@ if [ -z $CORRAL_registry_cert ]; then
   helm upgrade \
   --install \
   --create-namespace \
-  --set hostname="$CORRAL_internal_rancher_host" \
-  --set rancherImage="$CORRAL_registry_fqdn/rancher/rancher" \
+  --set hostname="$CORRAL_fqdn" \
+  --set rancherImage="${CORRAL_registry_fqdn}/${CORRAL_rancher_image}" \
   --set systemDefaultRegistry="$CORRAL_registry_fqdn" \
   --set useBundledSystemChart=true \
+  --set "extraEnv[0].name=CATTLE_AGENT_IMAGE" --set "extraEnv[0].value=${CORRAL_rancher_image}-agent:v${CORRAL_rancher_version}" \
   --version "${CORRAL_rancher_version}" \
   --devel \
   --wait \
@@ -28,11 +29,12 @@ else
   helm upgrade \
   --install \
   --create-namespace \
-  --set hostname="$CORRAL_internal_rancher_host" \
-  --set rancherImage="$CORRAL_registry_fqdn/rancher/rancher" \
+  --set hostname="$CORRAL_fqdn" \
+  --set rancherImage="${CORRAL_registry_fqdn}/${CORRAL_rancher_image}" \
   --set systemDefaultRegistry="$CORRAL_registry_fqdn" \
   --set useBundledSystemChart=true \
   --set ingress.tls.source=secret \
+  --set "extraEnv[0].name=CATTLE_AGENT_IMAGE" --set "extraEnv[0].value=${CORRAL_rancher_image}-agent:v${CORRAL_rancher_version}" \
   --version "${CORRAL_rancher_version}" \
   --devel \
   --wait \
