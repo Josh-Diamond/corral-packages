@@ -9,6 +9,8 @@ templates:
   - k3s
 variables:
   kubernetes_version:
+    - v1.30.3+k3s1
+    - v1.28.12+k3s1
     - v1.26.8+k3s1
     - v1.25.13+k3s1
     - v1.24.17+k3s1
